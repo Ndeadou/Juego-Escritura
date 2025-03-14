@@ -7,5 +7,4 @@ module com.example.juegoescritura {
     exports com.example.juegoescritura;
     exports com.example.juegoescritura.controller;
     exports com.example.juegoescritura.model;
-    exports com.example.juegoescritura.view;
 }

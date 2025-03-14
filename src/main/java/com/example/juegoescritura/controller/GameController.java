@@ -20,7 +20,8 @@ public class GameController {
     }
 
     public boolean checkWord(String input) {
-        return input.equalsIgnoreCase(currentWord);
+        // Validar que la palabra coincida exactamente, respetando mayúsculas
+        return input.equals(currentWord);
     }
 }
 
