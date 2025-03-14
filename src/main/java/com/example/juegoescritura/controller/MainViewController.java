@@ -10,8 +10,8 @@ import javafx.scene.image.ImageView;
 import javafx.util.Duration;
 
 /**
- * Controlador de la interfaz gráfica del juego de escritura rápida.
- * Gestiona la lógica del juego, la actualización de la interfaz y la interacción del usuario.
+ * Controller for the graphical interface of the fast typing game.
+ * Manages the game logic, UI updates, and user interaction.
  *
  * @author Miguel Descance
  * @version 1.0
@@ -20,40 +20,40 @@ import javafx.util.Duration;
  */
 public class MainViewController {
 
-    // Elementos de la interfaz gráfica
+    // UI elements
     @FXML
-    private Label wordLabel; // Muestra la palabra a escribir
-
-    @FXML
-    private TextField inputField; // Campo donde el usuario escribe la palabra
+    private Label wordLabel; // Displays the word to be typed
 
     @FXML
-    private Label resultLabel; // Muestra si la palabra ingresada es correcta o incorrecta
+    private TextField inputField; // Input field where the user types the word
 
     @FXML
-    private Label timerLabel; // Muestra el tiempo restante
+    private Label resultLabel; // Displays whether the typed word is correct or incorrect
 
     @FXML
-    private Label scoreLabel; // Muestra la puntuación del usuario
+    private Label timerLabel; // Displays the remaining time
 
     @FXML
-    private Label levelLabel; // Muestra el nivel actual del jugador
+    private Label scoreLabel; // Displays the user's score
 
     @FXML
-    private ImageView sun1; // Imagen que representa las vidas restantes
+    private Label levelLabel; // Displays the current level of the player
 
     @FXML
-    private Button restartButton; // Botón para reiniciar el juego
+    private ImageView sun1; // Image representing the remaining lives
 
-    // Variables de control del juego
-    private WordGenerator wordGenerator; // Generador de palabras aleatorias
-    private Timeline timeline; // Temporizador del juego
-    private int timeLeft; // Tiempo restante en la ronda
-    private int score; // Puntos acumulados
-    private int level; // Nivel del jugador
-    private int lives; // Vidas restantes del jugador
+    @FXML
+    private Button restartButton; // Button to restart the game
 
-    // Lista de imágenes que representan las vidas
+    // Game control variables
+    private WordGenerator wordGenerator; // Generates random words
+    private Timeline timeline; // Game timer
+    private int timeLeft; // Remaining time in the round
+    private int score; // Accumulated points
+    private int level; // Player's level
+    private int lives; // Player's remaining lives
+
+    // List of images representing lives
     private final String[] sunImages = {
             "/com/example/juegoescritura/sol_1.jpeg",
             "/com/example/juegoescritura/sol_2.jpeg",
@@ -63,8 +63,8 @@ public class MainViewController {
     };
 
     /**
-     * Método de inicialización del controlador.
-     * Se ejecuta automáticamente al cargar el archivo FXML.
+     * Initializes the controller.
+     * This method is automatically executed when the FXML file is loaded.
      */
     public void initialize() {
         wordGenerator = new WordGenerator();
@@ -76,7 +76,7 @@ public class MainViewController {
     }
 
     /**
-     * Inicia una nueva partida reiniciando todas las variables del juego.
+     * Starts a new game by resetting all game variables.
      */
     private void startGame() {
         score = 0;
@@ -92,11 +92,11 @@ public class MainViewController {
     }
 
     /**
-     * Inicia una nueva ronda generando una nueva palabra y reiniciando el temporizador.
+     * Starts a new round by generating a new word and resetting the timer.
      */
     @FXML
     private void startNewRound() {
-        System.out.println("Nueva ronda iniciada!");
+        System.out.println("New round started!");
         String newWord = wordGenerator.generateWord(level);
         wordLabel.setText(newWord);
         resultLabel.setText("");
@@ -105,7 +105,7 @@ public class MainViewController {
     }
 
     /**
-     * Verifica si la palabra ingresada es correcta y actualiza el juego en consecuencia.
+     * Checks if the typed word is correct and updates the game accordingly.
      */
     @FXML
     private void checkWord() {
@@ -113,19 +113,19 @@ public class MainViewController {
         String currentWord = wordLabel.getText().trim();
 
         if (typedWord.equals(currentWord)) {
-            resultLabel.setText("¡Correcto!");
+            resultLabel.setText("Correct!");
             score++;
             levelUp();
             timeline.stop();
             startNewRound();
         } else {
-            resultLabel.setText("Incorrecto, inténtalo de nuevo.");
+            resultLabel.setText("Incorrect, try again.");
             decreaseLife();
         }
     }
 
     /**
-     * Reinicia y comienza el temporizador para la ronda actual.
+     * Resets and starts the timer for the current round.
      */
     private void resetTimer() {
         if (timeline != null) {
@@ -133,11 +133,11 @@ public class MainViewController {
         }
 
         timeLeft = Math.max(20 - ((level - 1) / 5) * 2, 2);
-        timerLabel.setText("Tiempo restante: " + timeLeft + "s");
+        timerLabel.setText("Time remaining: " + timeLeft + "s");
 
         timeline = new Timeline(new KeyFrame(Duration.seconds(1), event -> {
             timeLeft--;
-            timerLabel.setText("Tiempo restante: " + timeLeft + "s");
+            timerLabel.setText("Time remaining: " + timeLeft + "s");
 
             if (timeLeft <= 0) {
                 timeline.stop();
@@ -149,80 +149,81 @@ public class MainViewController {
     }
 
     /**
-     * Maneja la situación cuando el tiempo se agota.
+     * Handles the situation when time runs out.
      */
     private void handleTimeUp() {
-        resultLabel.setText("¡Tiempo agotado! Nivel alcanzado: " + level + ". Puntos: " + score);
+        resultLabel.setText("Time's up! Level reached: " + level + ". Points: " + score);
         decreaseLife();
     }
 
     /**
-     * Reduce la cantidad de vidas del jugador y actualiza la interfaz.
-     * Si el jugador pierde todas las vidas, el juego termina.
+     * Reduces the player's lives and updates the UI.
+     * If the player loses all lives, the game ends.
      */
     private void decreaseLife() {
         if (lives > 0) {
-            lives--; // Reducimos la vida solo si quedan
+            lives--; // Reduce life only if available
         }
 
-        updateSunImages(); // Actualizar la imagen del sol según la vida actual
+        updateSunImages(); // Update the sun image according to the remaining lives
 
         if (lives > 0) {
             startNewRound();
         } else {
-            resultLabel.setText("¡Juego terminado! Nivel final: " + level + ". Puntos: " + score);
+            resultLabel.setText("Game over! Final level: " + level + ". Points: " + score);
             inputField.setDisable(true);
             restartButton.setVisible(true);
         }
     }
 
     /**
-     * Aumenta el nivel del jugador y actualiza la interfaz.
+     * Increases the player's level and updates the UI.
      */
     private void levelUp() {
         level++;
-        scoreLabel.setText("Puntos: " + score);
-        levelLabel.setText("Nivel: " + level);
+        scoreLabel.setText("Points: " + score);
+        levelLabel.setText("Level: " + level);
     }
 
     /**
-     * Actualiza los elementos de la interfaz al inicio del juego.
+     * Updates UI elements at the beginning of the game.
      */
     private void updateUI() {
-        timerLabel.setText("Tiempo restante: 20s");
-        scoreLabel.setText("Puntos: 0");
-        levelLabel.setText("Nivel: 1");
+        timerLabel.setText("Time remaining: 20s");
+        scoreLabel.setText("Points: 0");
+        levelLabel.setText("Level: 1");
         updateSunImages();
     }
 
     /**
-     * Actualiza la imagen del sol según la cantidad de vidas restantes.
+     * Updates the sun image according to the remaining number of lives.
      */
     private void updateSunImages() {
         if (lives > 0 && lives <= sunImages.length) {
-            String imagePath = sunImages[lives - 1]; // Obtener la imagen correcta
+            String imagePath = sunImages[lives - 1]; // Get the correct image
             java.net.URL imageUrl = getClass().getResource(imagePath);
 
             if (imageUrl != null) {
                 Image sunImage = new Image(imageUrl.toString());
                 sun1.setImage(sunImage);
             } else {
-                System.out.println("Advertencia: No se encontró la imagen " + imagePath);
+                System.out.println("Warning: Image not found " + imagePath);
                 sun1.setImage(null);
             }
         } else {
-            sun1.setImage(null); // Si no hay vidas, ocultamos la imagen
+            sun1.setImage(null); // Hide the image if no lives remain
         }
     }
 
     /**
-     * Reinicia el juego llamando al método {@link #startGame()}.
+     * Restarts the game by calling the {@link #startGame()} method.
      */
     @FXML
     private void restartGame() {
         startGame();
     }
 }
+
 
 
 

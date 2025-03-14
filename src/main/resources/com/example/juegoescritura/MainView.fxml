@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<!-- Importación de elementos de JavaFX necesarios para la interfaz -->
+<!-- Import JavaFX elements needed for the interface -->
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
@@ -12,86 +12,86 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.text.Font?>
 
-<!-- Diseño principal de la interfaz: GridPane con 10 filas y 1 columna -->
+<!-- Main layout: GridPane with 10 rows and 1 column -->
 <GridPane alignment="CENTER" hgap="10" vgap="10"
           xmlns="http://javafx.com/javafx/23.0.1"
           xmlns:fx="http://javafx.com/fxml/1"
           fx:controller="com.example.juegoescritura.controller.MainViewController">
 
-    <!-- Título principal del juego -->
+    <!-- Main game title -->
     <Label style="-fx-font-size: 28px; -fx-font-weight: bold;"
            text="TIME WORD" textFill="#2499ff"
            GridPane.columnIndex="0" GridPane.rowIndex="0" />
 
-    <!-- Muestra la palabra que el usuario debe escribir -->
-    <Label fx:id="wordLabel" text="Escribe esta palabra:"
+    <!-- Displays the word the user must type -->
+    <Label fx:id="wordLabel" text="Type this word:"
            GridPane.columnIndex="0" GridPane.rowIndex="1">
         <font>
             <Font size="15.0" />
         </font>
     </Label>
 
-    <!-- Campo de texto donde el usuario escribe la palabra -->
-    <TextField fx:id="inputField" promptText="Escribe aquí"
+    <!-- Text field where the user types the word -->
+    <TextField fx:id="inputField" promptText="Type here"
                GridPane.columnIndex="0" GridPane.rowIndex="2">
         <font>
             <Font size="18.0" />
         </font>
     </TextField>
 
-    <!-- Etiqueta para mostrar el resultado de la palabra ingresada -->
-    <Label fx:id="resultLabel" text="Resultado"
+    <!-- Label to display whether the input word is correct or incorrect -->
+    <Label fx:id="resultLabel" text="Result"
            GridPane.columnIndex="0" GridPane.rowIndex="3">
         <font>
             <Font size="15.0" />
         </font>
     </Label>
 
-    <!-- Muestra el tiempo restante para escribir la palabra -->
-    <Label fx:id="timerLabel" text="Tiempo restante: 20s"
+    <!-- Displays the remaining time to type the word -->
+    <Label fx:id="timerLabel" text="Time remaining: 20s"
            GridPane.columnIndex="0" GridPane.rowIndex="4">
         <font>
             <Font size="15.0" />
         </font>
     </Label>
 
-    <!-- Muestra la puntuación del usuario -->
-    <Label fx:id="scoreLabel" text="Puntos: 0"
+    <!-- Displays the user's score -->
+    <Label fx:id="scoreLabel" text="Score: 0"
            GridPane.columnIndex="0" GridPane.rowIndex="5">
         <font>
             <Font size="15.0" />
         </font>
     </Label>
 
-    <!-- Muestra el nivel actual del jugador -->
-    <Label fx:id="levelLabel" text="Nivel: 1"
+    <!-- Displays the current level of the player -->
+    <Label fx:id="levelLabel" text="Level: 1"
            GridPane.columnIndex="0" GridPane.rowIndex="6">
         <font>
             <Font size="15.0" />
         </font>
     </Label>
 
-    <!-- Contenedor de la imagen del sol que representa la vida del jugador -->
+    <!-- Container for the sun image representing the player's lives -->
     <HBox fx:id="sunContainer" alignment="CENTER" spacing="10"
           GridPane.columnIndex="0" GridPane.rowIndex="7">
         <ImageView fx:id="sun1" fitHeight="70.0" fitWidth="70.0" />
     </HBox>
 
-    <!-- Botón para iniciar una nueva palabra -->
-    <Button onAction="#startNewRound" text="Nueva palabra" textFill="RED"
+    <!-- Button to start a new word round -->
+    <Button onAction="#startNewRound" text="New word" textFill="RED"
             GridPane.columnIndex="0" GridPane.rowIndex="8" />
 
-    <!-- Botón para reiniciar el juego -->
-    <Button fx:id="restartButton" onAction="#restartGame" text="Reiniciar juego"
+    <!-- Button to restart the game -->
+    <Button fx:id="restartButton" onAction="#restartGame" text="Restart game"
             textFill="#d00303" visible="false"
             GridPane.columnIndex="0" GridPane.rowIndex="9" />
 
-    <!-- Configuración de las columnas (solo una columna en este caso) -->
+    <!-- Column configuration (only one column in this case) -->
     <columnConstraints>
         <ColumnConstraints />
     </columnConstraints>
 
-    <!-- Configuración de las filas para distribuir elementos de manera uniforme -->
+    <!-- Row configuration to distribute elements evenly -->
     <rowConstraints>
         <RowConstraints />
         <RowConstraints />
@@ -105,10 +105,9 @@
         <RowConstraints />
     </rowConstraints>
 
-    <!-- Espaciado interior del GridPane -->
+    <!-- Internal padding for the GridPane -->
     <padding>
         <Insets bottom="30.0" left="30.0" right="30.0" top="30.0" />
     </padding>
 
 </GridPane>
-

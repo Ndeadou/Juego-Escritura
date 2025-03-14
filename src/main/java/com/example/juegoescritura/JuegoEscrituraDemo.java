@@ -8,8 +8,8 @@ import javafx.stage.Stage;
 import java.util.logging.Logger;
 
 /**
- * Clase principal del juego de escritura rápida.
- * Se encarga de inicializar y mostrar la interfaz gráfica del juego.
+ * Main class for the fast typing game.
+ * Responsible for initializing and displaying the game's graphical interface.
  *
  * @author Miguel Descance
  * @version 1.0
@@ -19,17 +19,17 @@ import java.util.logging.Logger;
 public class JuegoEscrituraDemo extends Application {
 
     /**
-     * Logger para registrar eventos y errores en la aplicación.
+     * Logger for recording events and errors in the application.
      */
     private static final Logger logger = Logger.getLogger(JuegoEscrituraDemo.class.getName());
 
     /**
-     * Método de inicio de la aplicación JavaFX.
-     * Carga la vista principal desde el archivo FXML.
+     * JavaFX application startup method.
+     * Loads the main view from the FXML file.
      *
-     * Si ocurre un error al cargar el archivo FXML, se captura y se registra en el logger.
+     * If an error occurs while loading the FXML file, it is caught and logged.
      *
-     * @param stage La ventana principal de la aplicación.
+     * @param stage The main window of the application.
      */
     @Override
     public void start(Stage stage) {
@@ -38,22 +38,23 @@ public class JuegoEscrituraDemo extends Application {
             Parent root = loader.load();
 
             Scene scene = new Scene(root);
-            stage.setTitle("Juego de Escritura Rápida");
+            stage.setTitle("Fast Typing Game");
             stage.setScene(scene);
             stage.show();
         } catch (Exception e) {
-            logger.severe("Error al cargar la vista principal: " + e.getMessage());
+            logger.severe("Error loading the main view: " + e.getMessage());
         }
     }
 
     /**
-     * Método principal que inicia la aplicación.
-     * Llama al método {@code launch()} de JavaFX.
+     * Main method that starts the application.
+     * Calls the {@code launch()} method from JavaFX.
      *
-     * @param args Argumentos de la línea de comandos.
-     * @serialData Lanza la ejecución de la aplicación JavaFX.
+     * @param args Command-line arguments.
+     * @serialData Launches the execution of the JavaFX application.
      */
     public static void main(String[] args) {
         launch(args);
     }
 }
+

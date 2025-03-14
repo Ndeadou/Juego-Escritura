@@ -3,7 +3,7 @@ package com.example.juegoescritura.model;
 import java.util.Random;
 
 /**
- * Clase encargada de generar palabras aleatorias según el nivel del jugador.
+ * Class responsible for generating random words based on the player's level.
  *
  * @author Miguel Descance
  * @version 1.0
@@ -12,49 +12,49 @@ import java.util.Random;
  */
 public class WordGenerator {
 
-    /** Lista de palabras para el nivel 1 (palabras cortas y sencillas). */
+    /** List of words for level 1 (short and simple words). */
     private static final String[] LEVEL_1_WORDS = {
             "Sol", "Luz", "Pan", "Flor", "Mar", "Casa", "Luna", "Roca", "Agua", "Paz", "sal", "bus"
     };
 
-    /** Lista de palabras para el nivel 2 (palabras medianas). */
+    /** List of words for level 2 (medium-length words). */
     private static final String[] LEVEL_2_WORDS = {
             "manzana", "elefante", "teclado", "ventana", "juego", "carretera", "película", "mariposa", "sandía", "espejo", "Higuana"
     };
 
-    /** Lista de palabras para el nivel 3 (palabras más largas y complejas). */
+    /** List of words for level 3 (longer and more complex words). */
     private static final String[] LEVEL_3_WORDS = {
             "programar", "universo", "computadora", "relámpago", "montaña", "astronauta", "fotografía", "bicicleta", "biblioteca", "murciélago"
     };
 
-    /** Lista de palabras para el nivel 4 (palabras difíciles y poco comunes). */
+    /** List of words for level 4 (difficult and less common words). */
     private static final String[] LEVEL_4_WORDS = {
             "hipopotomonstrosesquipedaliofobia", "otorrinolaringología", "paralelepípedo", "electroencefalografista", "anticonstitucionalmente",
             "características", "parietotemporoccipital", "Esternocleidomastoideo", "Hiperventilación", "xilófono",
             "Antipatriota", "Desoxirribonucleótido"
     };
 
-    /** Generador de números aleatorios para seleccionar palabras. */
+    /** Random number generator for selecting words. */
     private final Random random;
 
     /**
-     * Constructor de la clase WordGenerator.
-     * Inicializa el generador de números aleatorios.
+     * Constructor for the {@code WordGenerator} class.
+     * Initializes the random number generator.
      */
     public WordGenerator() {
         this.random = new Random();
     }
 
     /**
-     * Genera una palabra aleatoria según el nivel especificado.
+     * Generates a random word based on the specified level.
      *
-     * @param level El nivel de dificultad del juego (1 a 4).
-     * @return Una palabra aleatoria del nivel correspondiente, con la primera letra en mayúscula.
-     * @throws IllegalArgumentException Si el nivel es menor a 1.
-     * @serialData Se obtiene una palabra aleatoria de la lista correspondiente.
+     * @param level The difficulty level of the game (1 to 4).
+     * @return A random word from the corresponding level, with the first letter capitalized.
+     * @throws IllegalArgumentException If the level is less than 1.
+     * @serialData A random word is obtained from the corresponding list.
      */
     public String generateWord(int level) {
-        // Selecciona la lista de palabras según el nivel
+        // Select the list of words based on the level
         String[] words = switch (level) {
             case 1 -> LEVEL_1_WORDS;
             case 2 -> LEVEL_2_WORDS;
@@ -63,17 +63,11 @@ public class WordGenerator {
             default -> LEVEL_4_WORDS;
         };
 
-        // Obtiene una palabra aleatoria dentro de la lista seleccionada
+        // Get a random word from the selected list
         int index = random.nextInt(words.length);
         String word = words[index];
 
-        // Retorna la palabra con la primera letra en mayúscula
+        // Return the word with the first letter capitalized
         return word.substring(0, 1).toUpperCase() + word.substring(1);
     }
 }
-
-
-
-
-
-
