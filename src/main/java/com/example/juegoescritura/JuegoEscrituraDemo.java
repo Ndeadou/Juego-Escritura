@@ -1,143 +1,59 @@
 package com.example.juegoescritura;
 
-import com.example.juegoescritura.controller.GameController;
-import javafx.animation.KeyFrame;
-import javafx.animation.Timeline;
 import javafx.application.Application;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.*;
-import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
-import javafx.util.Duration;
+import java.util.logging.Logger;
 
+/**
+ * Clase principal del juego de escritura rápida.
+ * Se encarga de inicializar y mostrar la interfaz gráfica del juego.
+ *
+ * @author Miguel Descance
+ * @version 1.0
+ * @since 2024-03-14
+ * @see javafx.application.Application
+ */
 public class JuegoEscrituraDemo extends Application {
 
-    private GameController controller;
-    private Label wordLabel;
-    private TextField inputField;
-    private Label resultLabel;
-    private Label timerLabel;
-    private Label scoreLabel;
-    private Label levelLabel;
-    private ProgressBar sunProgress;
-    private Timeline timeline;
-    private int timeLeft;
-    private int score;
-    private int level;
-    private int attempts;
-    private int baseTime = 20;
+    /**
+     * Logger para registrar eventos y errores en la aplicación.
+     */
+    private static final Logger logger = Logger.getLogger(JuegoEscrituraDemo.class.getName());
 
+    /**
+     * Método de inicio de la aplicación JavaFX.
+     * Carga la vista principal desde el archivo FXML.
+     *
+     * Si ocurre un error al cargar el archivo FXML, se captura y se registra en el logger.
+     *
+     * @param stage La ventana principal de la aplicación.
+     */
     @Override
     public void start(Stage stage) {
-        controller = new GameController();
-        score = 0;
-        level = 1;
-        attempts = 3;
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/juegoescritura/MainView.fxml"));
+            Parent root = loader.load();
 
-        wordLabel = new Label();
-        inputField = new TextField();
-        resultLabel = new Label();
-        timerLabel = new Label();
-        scoreLabel = new Label("Puntos: 0");
-        levelLabel = new Label("Nivel: 1");
-        sunProgress = new ProgressBar(1.0);
-        Button newRoundButton = new Button("Nueva palabra");
-
-        newRoundButton.setOnAction(e -> startNewRound());
-        inputField.setOnAction(e -> checkWord());
-
-        VBox layout = new VBox(10, wordLabel, inputField, resultLabel, timerLabel, scoreLabel, levelLabel, sunProgress, newRoundButton);
-        Scene scene = new Scene(layout, 400, 350);
-
-        stage.setTitle("Juego de Escritura Rápida");
-        stage.setScene(scene);
-        stage.show();
-
-        startNewRound();
-    }
-
-    private void startNewRound() {
-        if (attempts > 0) {
-            controller.startNewRound(level);
-            wordLabel.setText("Escribe esta palabra: " + controller.getCurrentWord());
-            inputField.clear();
-            resultLabel.setText("");
-            inputField.setDisable(false);
-            startTimer(getAdjustedTime());
+            Scene scene = new Scene(root);
+            stage.setTitle("Juego de Escritura Rápida");
+            stage.setScene(scene);
+            stage.show();
+        } catch (Exception e) {
+            logger.severe("Error al cargar la vista principal: " + e.getMessage());
         }
     }
 
-    private void startTimer(int duration) {
-        timeLeft = duration;
-        timerLabel.setText("Tiempo restante: " + timeLeft + "s");
-
-        if (timeline != null) {
-            timeline.stop();
-        }
-
-        timeline = new Timeline(new KeyFrame(Duration.seconds(1), e -> {
-            timeLeft--;
-            timerLabel.setText("Tiempo restante: " + timeLeft + "s");
-
-            if (timeLeft <= 0) {
-                handleTimeOut();
-            }
-        }));
-
-        timeline.setCycleCount(duration);
-        timeline.play();
-    }
-
-    private void handleTimeOut() {
-        timeline.stop();
-        inputField.setDisable(true);
-        resultLabel.setText("¡Tiempo agotado! Presiona 'Nueva palabra' para continuar.");
-        reduceSunProgress();
-    }
-
-    private void checkWord() {
-        if (timeLeft > 0) {
-            String input = inputField.getText();
-            if (controller.checkWord(input)) {
-                resultLabel.setText("¡Correcto!");
-                timeline.stop();
-                inputField.setDisable(true);
-                score++;
-                scoreLabel.setText("Puntos: " + score);
-
-                if (score % 5 == 0) {
-                    level++;
-                    levelLabel.setText("Nivel: " + level);
-                }
-            } else {
-                resultLabel.setText("Incorrecto. Inténtalo de nuevo.");
-                reduceSunProgress();
-            }
-        }
-    }
-
-    private void reduceSunProgress() {
-        attempts--;
-        sunProgress.setProgress((double) attempts / 3);
-
-        if (attempts <= 0) {
-            endGame();
-        }
-    }
-
-    private void endGame() {
-        timeline.stop();
-        inputField.setDisable(true);
-        resultLabel.setText("Juego terminado. Puntos: " + score + " | Niveles completados: " + level);
-    }
-
-    private int getAdjustedTime() {
-        int reducedTime = baseTime - (level / 5) * 2;
-        return Math.max(reducedTime, 2);
-    }
-
+    /**
+     * Método principal que inicia la aplicación.
+     * Llama al método {@code launch()} de JavaFX.
+     *
+     * @param args Argumentos de la línea de comandos.
+     * @serialData Lanza la ejecución de la aplicación JavaFX.
+     */
     public static void main(String[] args) {
         launch(args);
     }
 }
-
