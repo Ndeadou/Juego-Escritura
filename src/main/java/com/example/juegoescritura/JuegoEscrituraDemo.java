@@ -26,7 +26,6 @@ public class JuegoEscrituraDemo extends Application {
     /**
      * JavaFX application startup method.
      * Loads the main view from the FXML file.
-     *
      * If an error occurs while loading the FXML file, it is caught and logged.
      *
      * @param stage The main window of the application.
