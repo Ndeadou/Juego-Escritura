@@ -7,7 +7,7 @@ import java.util.Random;
  *
  * @author Miguel Descance
  * @version 1.0
- * @since 2024-03-14
+ * @since 2025-03-14
  * @see java.util.Random
  */
 public class WordGenerator {

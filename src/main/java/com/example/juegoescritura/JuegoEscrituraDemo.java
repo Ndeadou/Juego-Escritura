@@ -13,7 +13,7 @@ import java.util.logging.Logger;
  *
  * @author Miguel Descance
  * @version 1.0
- * @since 2024-03-14
+ * @since 2025-03-14
  * @see javafx.application.Application
  */
 public class JuegoEscrituraDemo extends Application {
